@@ -80,6 +80,11 @@ module Kitchen
       end
       expand_path_for :encrypted_data_bag_secret_key_path
 
+      default_config :cookbooks_dir do |provisioner|
+        File.join(provisioner[:kitchen_root], "cookbooks")
+      end
+      expand_path_for :cookbooks_dir
+
       # (see Base#install_command)
       def install_command
         return unless config[:require_chef_omnibus]
@@ -336,7 +341,7 @@ module Kitchen
       #   to the kitchen root
       # @api private
       def cookbooks_dir
-        File.join(config[:kitchen_root], "cookbooks")
+        config[:cookbooks_dir]
       end
 
       # @return [String] an absolute path to a site-cookbooks/ directory,
